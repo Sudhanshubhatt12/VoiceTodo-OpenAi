@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Voice Controlled Todo App</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Voice Controlled Todo App</h1>
+        <div class="controls">
+            <button id="start-btn">Start Voice Control</button>
+            <button id="stop-btn" disabled>Stop Voice Control</button>
+        </div>
+        
+        <div id="status">Click "Start Voice Control" to begin</div>
+        
+        <div class="todo-container">
+            <h2>Your Todos</h2>
+            <ul id="todo-list"></ul>
+        </div>
+        
+        <div class="commands">
+            <h3>Voice Commands:</h3>
+            <ul>
+                <li>"Add [task]" - Add a new todo</li>
+                <li>"Remove [number]" - Remove todo by number</li>
+                <li>"Clear" - Clear all todos</li>
+                <li>"List" - Read out all todos</li>
+            </ul>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
