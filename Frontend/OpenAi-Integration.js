@@ -12,24 +12,33 @@ export async function getCompletion(prompt) {
     
       const response = await client.chat.completions.create({
         messages: [
-          { role:"system", 
-          content: `you are a task analyser .Extract the following details from the user prompt:
           {
-           "task": "...",
-           "description": "...",
-           "priority": "...",
-           "dueDate": "..." (or null if not specified)
-        }
-          Keep the task field case-insensitive for comparison.`
-        },
-          { role:"user", content: "What is the capital of France?" }
+            role: "system",
+            content: `You are a task analyzer. Extract the following details from the user's input:
+            1. Operation (Add/Delete/Update)
+            2. Task description
+            3. Urgency (High/Medium/Low)
+            4. Date and Time (if mentioned in dd/mm/yyyy format)
+    
+            Respond in JSON format like: 
+            {
+              "operation": "...",
+              "task": "...",
+              "urgency": "...",
+              "datetime": "..."
+            }
+            
+            Keep the task field case-insensitive for comparison purposes.`
+          },
+          {
+            role: "user",
+            content: userCommand
+          }
         ],
         model: "gpt-4o",
-        temperature: 1,
+        temperature: 0.7,
         max_tokens: 4096,
         top_p: 1
       });
-    
-      console.log(response.choices[0].message.content);
-      return JSON.parse(response.choices[0].message.content);
+      return response;
     }
