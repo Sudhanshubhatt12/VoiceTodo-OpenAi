@@ -1,15 +1,14 @@
 package com.voiceTodo.voiceTodo.controller;
 
-
 import com.voiceTodo.voiceTodo.model.Task;
+import com.voiceTodo.voiceTodo.model.User;
+import com.voiceTodo.voiceTodo.repository.UserRepository;
+import com.voiceTodo.voiceTodo.service.NotificationService;
 import com.voiceTodo.voiceTodo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,44 +16,64 @@ import java.util.Optional;
 public class TaskController {
 
     @Autowired
-    TaskService taskService;
+    private TaskService taskService;
 
-    @PostMapping("/add/task")
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
-         if(task==null){
-             throw new RuntimeException();
-         }
-        Optional<Task > taskResponse=taskService.createTask(task);
-         return ResponseEntity.of(taskResponse);
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostMapping
+    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+        Task createdTask = taskService.createTask(task.getOperation(), task.getTask(), task.getUrgency(), task.getDatetime());
+
+        if (createdTask != null && task.getUserId() != null) {
+            Optional<User> user = userRepository.findById(task.getUserId());
+            user.ifPresent(userData -> notificationService.sendTaskNotifications(task, userData, false));
+        }
+
+        return ResponseEntity.ok(createdTask);
     }
 
-
-    @GetMapping("/get/task/{id}")
-    public ResponseEntity<Task> getTask(@PathVariable Long id){
-        Optional<Task> taskResponse=taskService.getTask(id);
-        return ResponseEntity.of(taskResponse);
-    }
-
-    @GetMapping("/get/tasks")
-    public ResponseEntity<List<Task>> getAllTask(){
-        List<Task> taskResponse=taskService.getAllTask();
-        return ResponseEntity.of(Optional.of(taskResponse));
-    }
-
-    @PutMapping("/update/task/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id,@RequestBody Task task){
-        Optional<Task> taskResponse=taskService.getTask(id);
-        return ResponseEntity.of(taskResponse);
-    }
-
-    @DeleteMapping("/delete/task/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
-        try {
-            taskService.deleteTask(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTask(@PathVariable Long id) {
+        Optional<Task> task = taskService.getTask(id);
+        if (task.isPresent()) {
+            return ResponseEntity.ok(task.get());
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
+    @GetMapping
+    public ResponseEntity<Iterable<Task>> getAllTasks() {
+        Iterable<Task> tasks = taskService.getAllTasks();
+        return ResponseEntity.ok(tasks);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+        Task updatedTask = taskService.updateTask(id, task.getOperation(), task.getTask(), task.getUrgency(), task.getDatetime().toString());
+
+        if (updatedTask != null) {
+            if (task.getUserId() != null) {
+                Optional<User> user = userRepository.findById(task.getUserId());
+                user.ifPresent(userData -> notificationService.sendTaskNotifications(task, userData, true));
+            }
+            return ResponseEntity.ok(updatedTask);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        boolean deleted = taskService.deleteTask(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

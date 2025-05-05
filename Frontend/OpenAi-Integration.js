@@ -1,5 +1,5 @@
 import OpenAI from "https://cdn.skypack.dev/openai";    
-import GITHUB_TOKEN from "./config.js";
+import {GITHUB_TOKEN} from "./config.js";
 
 const token=GITHUB_TOKEN;
 

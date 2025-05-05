@@ -1,48 +1,55 @@
 package com.voiceTodo.voiceTodo.service;
 
+
 import com.voiceTodo.voiceTodo.model.Task;
-import com.voiceTodo.voiceTodo.repository.TaskRepo;
+import com.voiceTodo.voiceTodo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
-
 
 @Service
 public class TaskService {
+
     @Autowired
-    TaskRepo taskRepo;
+    private TaskRepository taskRepository;
 
-    public Optional<Task> createTask(Task task){
-        Task task1=taskRepo.save(task);
-       return Optional.of(task1);
+    public Task createTask(String operation, String task, String urgency, String datetime) {
+        Task newTask = new Task();
+        newTask.setOperation(operation);
+        newTask.setTask(task);
+        newTask.setUrgency(urgency);
+        newTask.setDatetime(datetime);
+        return taskRepository.save(newTask);
     }
 
-    public Optional<Task> getTask(Long id){
-        return taskRepo.findById(id);
-    }
-
-    public List<Task> getAllTask(){
-        return taskRepo.findAll();
-    }
-    public Optional<Task> updateTask(Long id,Task newTask){
-        Optional<Task> existingTask=taskRepo.findById(id);
-        if(existingTask.isPresent()){
-            existingTask.get().setTask(newTask.getTask());
-            existingTask.get().setUrgency(newTask.getUrgency());
-            existingTask.get().setOperation(newTask.getOperation());
-            existingTask.get().setDateTime(newTask.getDateTime());
-            taskRepo.save(newTask);
-            return  existingTask;
-        }else{
-            return null;
+    public Task updateTask(Long id, String operation, String task, String urgency, String datetime) {
+        Optional<Task> taskOptional = taskRepository.findById(id);
+        if (taskOptional.isPresent()) {
+            Task existingTask = taskOptional.get();
+            existingTask.setOperation(operation);
+            existingTask.setTask(task);
+            existingTask.setUrgency(urgency);
+            existingTask.setDatetime(datetime);
+            return taskRepository.save(existingTask);
         }
-
+        return null;
     }
-    public void deleteTask(Long id){
-        if(taskRepo.existsById(id)) {
-            taskRepo.deleteById(id);
+
+    public boolean deleteTask(Long id) {
+        if (taskRepository.existsById(id)) {
+            taskRepository.deleteById(id);
+            return true;
         }
+        return false;
+    }
+
+    public Optional<Task> getTask(Long id) {
+        return taskRepository.findById(id);
+    }
+
+    public Iterable<Task> getAllTasks() {
+        return taskRepository.findAll();
     }
 }

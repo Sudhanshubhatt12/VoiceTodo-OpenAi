@@ -11,16 +11,20 @@
     <div class="container">
         <h1>Voice Controlled Todo App</h1>
         <div class="controls">
-            <button id="start-btn">Start Voice Control</button>
+            <button class="voice-btn">Start Voice Control</button>
             <button id="stop-btn" disabled>Stop Voice Control</button>
         </div>
         
         <div id="status">Click "Start Voice Control" to begin</div>
         
-        <div class="todo-container">
-            <h2>Your Todos</h2>
-            <ul id="todo-list"></ul>
+        <div class="task-info">
+            <p><strong>Operation:</strong> <span id="operation"></span></p>
+            <p><strong>Task:</strong> <span id="task"></span></p>
+            <p><strong>Urgency:</strong> <span id="urgency"></span></p>
+            <p><strong>Datetime:</strong> <span id="datetime"></span></p>
         </div>
+        
+        <div id="confirmation-area"></div>
         
         <div class="commands">
             <h3>Voice Commands:</h3>
@@ -32,6 +36,6 @@
             </ul>
         </div>
     </div>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
 </body>
 </html>

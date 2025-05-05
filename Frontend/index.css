@@ -1,189 +1,112 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    perspective: 1000px;
-}
-
 .container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    font-family: 'Poppins', sans-serif;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
     border-radius: 15px;
-    padding: 30px;
-    width: 100%;
-    max-width: 650px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
-}
-
-.container:hover {
-    transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
+    box-shadow: 10px 10px 20px #1a1a1a, -10px -10px 20px #2f2f2f;
+    color: #e0e0e0;
 }
 
 h1 {
-    color: #fff;
     text-align: center;
-    margin-bottom: 25px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transform: translateZ(20px);
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px #000;
+    color: #fff;
 }
 
 .controls {
-    margin-bottom: 25px;
-    text-align: center;
-    transform: translateZ(10px);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
 }
 
 button {
-    padding: 12px 25px;
-    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 500;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    color: #fff;
     cursor: pointer;
-    background: linear-gradient(45deg, #1a73e8, #00ddeb);
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(26, 115, 232, 0.4);
-    transform: translateZ(15px);
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 5px 5px 15px #1a1a1a, -5px -5px 15px #2f2f2f;
 }
 
-button:hover:not(:disabled) {
-    transform: translateY(-3px) translateZ(20px);
-    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.6);
+button:hover {
+    transform: translateY(-5px);
+    box-shadow: 7px 7px 20px #1a1a1a, -7px -7px 20px #2f2f2f;
 }
 
 button:disabled {
     background: #666;
     cursor: not-allowed;
-    box-shadow: none;
-    transform: translateZ(0);
 }
 
 #status {
     text-align: center;
-    margin-bottom: 25px;
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #b0b0b0;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.task-info {
+    margin: 20px 0;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #222, #2d2d2d);
     border-radius: 10px;
-    color: #fff;
-    font-weight: 500;
-    transform: translateZ(10px);
-    transition: all 0.3s ease;
+    box-shadow: inset 5px 5px 10px #1a1a1a, inset -5px -5px 10px #2f2f2f;
 }
 
-#status.listening {
-    background: rgba(0, 221, 235, 0.2);
-    transform: translateZ(15px) scale(1.02);
+.task-info p {
+    margin: 10px 0;
+    font-size: 1em;
 }
 
-.todo-container {
-    margin-bottom: 25px;
-    transform: translateZ(5px);
+.task-info strong {
+    color: #4facfe;
 }
 
-h2 {
-    color: #fff;
-    margin-bottom: 15px;
-    transform: translateZ(15px);
-}
-
-#todo-list {
-    list-style: none;
-}
-
-#todo-list li {
+#confirmation-area {
+    margin: 20px 0;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    margin-bottom: 10px;
+    background: linear-gradient(135deg, #2d2d2d, #222);
     border-radius: 10px;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-    transform: translateZ(10px);
-    animation: slideIn 0.5s ease forwards;
-}
-
-#todo-list li:hover {
-    transform: translateZ(15px) translateX(5px);
-    background: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 5px 5px 10px #1a1a1a, inset -5px -5px 10px #2f2f2f;
+    min-height: 50px;
+    color: #e0e0e0;
 }
 
 .commands {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background: linear-gradient(135deg, #222, #2d2d2d);
     border-radius: 10px;
-    transform: translateZ(5px);
+    box-shadow: inset 5px 5px 10px #1a1a1a, inset -5px -5px 10px #2f2f2f;
 }
 
 .commands h3 {
-    color: #fff;
-    margin-bottom: 15px;
-    transform: translateZ(10px);
+    color: #00f2fe;
+    margin-bottom: 10px;
 }
 
 .commands ul {
-    list-style: none;
-    color: #fff;
+    list-style-type: none;
+    padding-left: 20px;
 }
 
 .commands li {
-    padding: 8px 0;
+    margin: 5px 0;
     position: relative;
-    transform: translateZ(5px);
-    transition: all 0.3s ease;
 }
 
 .commands li:before {
-    content: '➜';
-    margin-right: 10px;
-    color: #00ddeb;
-}
-
-.commands li:hover {
-    transform: translateZ(10px) translateX(5px);
-}
-
-/* Animations */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateZ(-20px) translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateZ(10px) translateX(0);
-    }
-}
-
-/* 3D tilt effect on hover */
-.container {
-    transition: transform 0.3s ease;
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 20px;
-    }
-    
-    button {
-        padding: 10px 20px;
-        margin: 5px;
-    }
+    content: "▶";
+    color: #4facfe;
+    position: absolute;
+    left: -15px;
 }
