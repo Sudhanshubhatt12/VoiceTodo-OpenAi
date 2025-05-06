@@ -5,10 +5,6 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.JwtException;
 import org.springframework.stereotype.Service;
 
-import java.security.KeyFactory;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Base64;
 
 @Service
 public class JwtService {

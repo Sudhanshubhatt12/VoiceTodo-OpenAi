@@ -1,10 +1,10 @@
 const config = {
     google: {
-        clientId: 'replace with client id',
+        clientId: '920310875867-1n2mdmaqa4cb40uuro6n1a7pebaqppnc.apps.googleusercontent.com',
         redirectUri: 'http://127.0.0.1:5500/class%208/todoUi/todoUi/UI/login.html/'
     },
     facebook: {
-        appId: 'replace with client id',
+        appId: 'for future use',
         redirectUri: window.location.origin + '/auth/facebook/callback.html'
     }
 };
